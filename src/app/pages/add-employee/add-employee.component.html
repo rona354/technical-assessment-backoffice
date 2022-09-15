@@ -1,0 +1,247 @@
+<div class="mx-auto min-h-screen py-6 sm:px-6 lg:px-8 bg-gray-100">
+	<div class="mt-10 sm:mt-0">
+		<div class="md:grid md:grid-cols-3 md:gap-6">
+			<!-- TITLE -->
+			<div class="md:col-span-1">
+				<div class="px-4 sm:px-0">
+					<h3 class="text-lg font-medium leading-6 text-gray-900">Add Employees</h3>
+					<p class="mt-1 text-sm text-gray-600">Able to fill out multiple employee</p>
+				</div>
+			</div>
+			<!-- FORM -->
+			<div class="mt-5 md:mt-0 md:col-span-2">
+				<div class="shadow overflow-hidden sm:rounded-md">
+
+					<form [formGroup]="form"
+						(ngSubmit)="onClickSubmit()"
+						ngNativeValidate>
+
+						<div class="px-4 py-5 bg-white sm:p-6">
+							<ng-container formArrayName="employees">
+								<ng-container *ngFor="let emp of employees.controls; index as i">
+									<!-- FORM FIELDS -->
+									<div [formGroupName]="i"
+										class="grid grid-cols-6 gap-6">
+										<!-- USERNAME -->
+										<div class="col-span-6 sm:col-span-3">
+											<label for="username"
+												class="block text-sm font-medium text-gray-700">Username</label>
+											<input formControlName="username"
+												type="text"
+												name="username"
+												id="username"
+												autocomplete="username"
+												required
+												class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+										</div>
+										<!-- EMAIL -->
+										<div class="col-span-6 sm:col-span-3">
+											<label for="email-address"
+												class="block text-sm font-medium text-gray-700">Email address</label>
+											<input formControlName="email"
+												type="email"
+												name="email-address"
+												id="email-address"
+												autocomplete="email"
+												maxlength="255"
+												required
+												class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+										</div>
+										<!-- FIRST NAME -->
+										<div class="col-span-6 sm:col-span-3">
+											<label for="first-name"
+												class="block text-sm font-medium text-gray-700">First name</label>
+											<input formControlName="firstName"
+												type="text"
+												name="first-name"
+												id="first-name"
+												autocomplete="given-name"
+												required
+												class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+										</div>
+										<!-- LAST NAME -->
+										<div class="col-span-6 sm:col-span-3">
+											<label for="last-name"
+												class="block text-sm font-medium text-gray-700">Last name</label>
+											<input formControlName="lastName"
+												type="text"
+												name="last-name"
+												id="last-name"
+												autocomplete="family-name"
+												required
+												class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+										</div>
+										<!-- BIRTHDATE -->
+										<div class="relative col-span-6 sm:col-span-2">
+											<label for="birthDate"
+												class="block text-sm font-medium text-gray-700">Birth date</label>
+											<input formControlName="birthDate"
+												id="birthDate"
+												name="birthDate"
+												type="text"
+												(click)="birthDate.open()"
+												class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm pl-11 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
+												placeholder="Select birth date"
+												[matDatepicker]="birthDate"
+												[max]="maxDate"
+												required>
+											<mat-datepicker-toggle matSuffix
+												[for]="birthDate"
+												class="absolute inset-y-0 left-0 top-6 flex items-center pl-3 pointer-events-none text-gray-500 dark:text-gray-400">
+											</mat-datepicker-toggle>
+											<mat-datepicker #birthDate></mat-datepicker>
+										</div>
+										<!-- Group -->
+										<div class="col-span-6 sm:col-span-2">
+											<label for="group"
+												class="block text-sm font-medium text-gray-700">Group</label>
+											<input formControlName="group"
+												type="text"
+												id="group"
+												name="group"
+												autocomplete="work"
+												required
+												class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+										</div>
+										<!-- Salary -->
+										<div class="col-span-6 sm:col-span-2">
+											<label for="basicSalary"
+												class="block text-sm font-medium text-gray-700">Basic salary</label>
+											<div class="mt-1 flex rounded-md shadow-sm">
+												<span
+													class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+													Rp.
+												</span>
+												<input formControlName="basicSalary"
+													currencyMask
+													type="text"
+													id="basicSalary"
+													name="basicSalary"
+													autocomplete="transaction-currency"
+													required
+													class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-none rounded-r-md">
+											</div>
+										</div>
+										<!-- STATUS -->
+										<fieldset class="col-span-6">
+											<legend class="contents text-sm font-medium text-gray-900">Employee status</legend>
+											<p class="text-xs text-gray-500">Please select one of statuses below</p>
+											<div class="mt-4 space-y-4">
+												<div class="flex items-center">
+													<input formControlName="status"
+														id="status-permanent"
+														name="status"
+														value="permanent"
+														type="radio"
+														required
+														class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 cursor-pointer">
+													<label for="permanent"
+														class="ml-3 block text-sm font-medium text-gray-700">
+														Permanent
+													</label>
+												</div>
+												<div class="flex items-center">
+													<input formControlName="status"
+														id="status-contract"
+														name="status"
+														value="contract"
+														type="radio"
+														required
+														class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 cursor-pointer">
+													<label for="push-contract"
+														class="ml-3 block text-sm font-medium text-gray-700">
+														Contract
+													</label>
+												</div>
+												<div class="flex items-center">
+													<input formControlName="status"
+														id="status-temporary"
+														name="status"
+														value="temporary"
+														type="radio"
+														required
+														class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 cursor-pointer">
+													<label for="push-temporary"
+														class="ml-3 block text-sm font-medium text-gray-700">
+														Temporary
+													</label>
+												</div>
+											</div>
+										</fieldset>
+									</div>
+									<!-- DIVIDER -->
+									<div *ngIf="employees.controls.length > 1"
+										class="hidden sm:block"
+										aria-hidden="true">
+										<div class="py-5">
+											<div class="border-t border-gray-200"></div>
+										</div>
+									</div>
+								</ng-container>
+							</ng-container>
+						</div>
+
+						<!-- BUTTONS -->
+						<div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+							<button (click)="addEmployee()"
+								type="button"
+								class="group relative float-left w-32 text-right py-2 px-4 border border-transparent text-sm font-medium
+								rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2
+								focus:ring-indigo-500 disabled:opacity-50">
+								<span class="absolute left-0 inset-y-0 flex items-center pl-3">
+									<!-- Heroicon name: user-add -->
+									<svg class="h-5 w-5 text-blue-300 group-hover:text-blue-200"
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-6 w-6"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										stroke-width="2">
+										<path stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+									</svg>
+								</span>
+								<span>
+									Add Form
+								</span>
+							</button>
+							<!-- BTN CANCEL -->
+							<button type="button"
+								routerLink="/home"
+								class="inline-flex justify-center py-2 px-4 mr-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white outline-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+								Cancel
+							</button>
+							<!-- BTN SAVE -->
+							<button type="submit"
+								[disabled]="(service.loading$ | async)"
+								class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-amber-500 disabled:bg-gray-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-600">
+								<ng-container *ngIf="service.loading$ | async; else saveState">
+									<svg role="status"
+										class="inline w-4 h-4 mr-3 text-white animate-spin"
+										viewBox="0 0 100 101"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+											fill="#E5E7EB" />
+										<path
+											d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+											fill="currentColor" />
+									</svg>
+									Loading...
+								</ng-container>
+								<ng-template #saveState>
+									Save
+								</ng-template>
+							</button>
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,63 @@
+<div class="mat-elevation-z1">
+	<table mat-table
+		[dataSource]="dataSource"
+		class="full-width-table"
+		matSort
+		aria-label="Elements">
+
+		<ng-container [matColumnDef]="column"
+			*ngFor="let column of displayedColumns">
+			<th mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header> {{column | uppercase}} </th>
+			<td class="font-sans"
+				mat-cell
+				*matCellDef="let element">
+				<ng-container [ngSwitch]="column">
+					<ng-container *ngSwitchCase="'birthDate'">
+						{{element[column] | date: "dd/MM/yyyy"}}
+					</ng-container>
+					<ng-container *ngSwitchCase="'basicSalary'">
+						{{element[column] | currency:'IDR':'Rp. ':'3.0'}}
+					</ng-container>
+					<ng-container *ngSwitchCase="'description'">
+						{{element[column] | date: "dd/MM/yyyy"}}
+					</ng-container>
+					<ng-container *ngSwitchCase="'action'">
+						<a href="#"
+							role="button"
+							class="text-indigo-600 hover:text-indigo-700">
+							Detail
+						</a>
+					</ng-container>
+					<!-- DEFAULT COLUMN -->
+					<ng-container *ngSwitchDefault>
+						{{element[column]}}
+					</ng-container>
+				</ng-container>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row
+			*matHeaderRowDef="displayedColumns"></tr>
+		<tr (click)="clickedData.emit(row)"
+			class="cursor-pointer font-normal text-xs hover:font-bold"
+			mat-row
+			*matRowDef="let row; columns: displayedColumns;"></tr>
+		<!-- Row shown when there is no matching data. -->
+		<tr class="mat-row"
+			*matNoDataRow>
+			<td class="mat-cell"
+				colspan="4">No data matching the filter</td>
+		</tr>
+	</table>
+
+	<mat-paginator class="font-sans"
+		#paginator
+		[length]="dataSource?.data?.length"
+		[pageIndex]="0"
+		[pageSize]="10"
+		[pageSizeOptions]="[5, 10, 20]"
+		aria-label="Select page">
+	</mat-paginator>
+</div>
